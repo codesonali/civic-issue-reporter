@@ -11,9 +11,7 @@ app.get("/",(req,res)=>{
     res.send("Civic Issue Reporter API is running");
 })
 
-app.post("/test",(req,res)=>{
-  res.json({message:"Received",data:req.body});;
-})
+
 connectDB().then(() => {
   app.listen(PORT, () => {
     console.log(`Server running on port ${PORT}`);
