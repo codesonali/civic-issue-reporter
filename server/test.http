@@ -20,3 +20,18 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjZhZTk4ZjM5Z
 ###
 GET http://localhost:5000/api/v1/auth/staff-only
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjZhZTk4ZjM5ZDllYmM3NTVjYWYyN2UwMCIsInJvbGUiOiJjaXRpemVuIiwiaWF0IjoxNzkzNjk0MzQ0LCJleHAiOjE3OTQyOTkxNDR9.yWOtI-n5VlDpncQXQ5FmPxHwzEIdnR5PeaokLEVV7vU
+
+###
+POST http://localhost:5000/api/v1/issues
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjZhZTk4ZjM5ZDllYmM3NTVjYWYyN2UwMCIsInJvbGUiOiJjaXRpemVuIiwiaWF0IjoxNzkzNjk0MzQ0LCJleHAiOjE3OTQyOTkxNDR9.yWOtI-n5VlDpncQXQ5FmPxHwzEIdnR5PeaokLEVV7vU
+
+
+{
+  "title": "Large pothole near market",
+  "description": "A deep pothole on the main road is causing accidents.",
+  "category": "pothole",
+  "longitude": 88.0636,
+  "latitude": 22.0667,
+  "address": "Main Road, Haldia"
+}
