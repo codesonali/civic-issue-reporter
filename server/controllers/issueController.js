@@ -1,31 +1,52 @@
+const cloudinary = require("../config/cloudinary");
+
+const uploadToCloudinary = (buffer) => {
+  return new Promise((resolve, reject) => {
+    const stream = cloudinary.uploader.upload_stream(
+      { folder: "civic-issues" },
+      (error, result) => {
+        if (error) reject(error);
+        else resolve(result);
+      }
+    );
+    stream.end(buffer);
+  });
+};
 const Issue = require("../models/Issue");
 
 const createIssue = async (req, res) => {
   try {
-    const { title, description, category, longitude, latitude, address } = req.body;
+  const { title, description, category, longitude, latitude, address } = req.body;
 
-    if (!title || !description || !category || longitude === undefined || latitude === undefined) {
-      return res.status(400).json({
-        message: "Title, description, category, longitude and latitude are required",
-      });
-    }
-
-    const issue = await Issue.create({
-      title,
-      description,
-      category,
-      address,
-      location: {
-        type: "Point",
-        coordinates: [longitude, latitude],
-      },
-      reporter: req.user._id,
+  if (!title || !description || !category || longitude === undefined || latitude === undefined) {
+    return res.status(400).json({
+      message: "Title, description, category, longitude and latitude are required",
     });
-
-    res.status(201).json({ message: "Issue reported successfully", issue });
-  } catch (error) {
-    res.status(500).json({ message: "Server error", error: error.message });
   }
+
+  const images = [];
+  for (const file of req.files || []) {
+    const result = await uploadToCloudinary(file.buffer);
+    images.push(result.secure_url);
+  }
+
+  const issue = await Issue.create({
+    title,
+    description,
+    category,
+    address,
+    images,
+    location: {
+      type: "Point",
+      coordinates: [Number(longitude), Number(latitude)],
+    },
+    reporter: req.user._id,
+  });
+
+  res.status(201).json({ message: "Issue reported successfully", issue });
+} catch (error) {
+  res.status(500).json({ message: "Server error", error: error.message });
+}
 };
 
 const getIssues = async (req, res) => {

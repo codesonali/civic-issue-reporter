@@ -53,3 +53,35 @@ Content-Type: application/json
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjZhZTk4ZjM5ZDllYmM3NTVjYWYyN2UwMCIsInJvbGUiOiJjaXRpemVuIiwiaWF0IjoxNzkzNjk0MzQ0LCJleHAiOjE3OTQyOTkxNDR9.yWOtI-n5VlDpncQXQ5FmPxHwzEIdnR5PeaokLEVV7vU
 
 { "status": "resolved" }
+
+###
+POST http://localhost:5000/api/v1/issues
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjZhZTk4ZjM5ZDllYmM3NTVjYWYyN2UwMCIsInJvbGUiOiJjaXRpemVuIiwiaWF0IjoxNzkzNjk0MzQ0LCJleHAiOjE3OTQyOTkxNDR9.yWOtI-n5VlDpncQXQ5FmPxHwzEIdnR5PeaokLEVV7vU
+Content-Type: multipart/form-data; boundary=----Boundary
+
+------Boundary
+Content-Disposition: form-data; name="title"
+
+Broken streetlight
+------Boundary
+Content-Disposition: form-data; name="description"
+
+The streetlight near the bus stop has not worked for a week.
+------Boundary
+Content-Disposition: form-data; name="category"
+
+streetlight
+------Boundary
+Content-Disposition: form-data; name="longitude"
+
+88.0640
+------Boundary
+Content-Disposition: form-data; name="latitude"
+
+22.0670
+------Boundary
+Content-Disposition: form-data; name="images"; filename="photo.jpg"
+Content-Type: image/jpeg
+
+< C:\Users\sonali\Downloads\pexels-mart-production-7577895.jpg
+------Boundary--
