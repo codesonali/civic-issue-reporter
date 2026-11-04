@@ -40,7 +40,7 @@ GET http://localhost:5000/api/v1/issues
 
 ###
 GET http://localhost:5000/api/v1/issues?category=pothole&page=1&limit=5
-
+0
 ###
 GET http://localhost:5000/api/v1/issues/6aea15ab97f2c5eb46b86150
 
@@ -89,3 +89,13 @@ Content-Type: image/jpeg
 ###
 POST http://localhost:5000/api/v1/issues/6aea15ab97f2c5eb46b86150/upvote
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjZhZTk4ZjM5ZDllYmM3NTVjYWYyN2UwMCIsInJvbGUiOiJjaXRpemVuIiwiaWF0IjoxNzkzNjk0MzQ0LCJleHAiOjE3OTQyOTkxNDR9.yWOtI-n5VlDpncQXQ5FmPxHwzEIdnR5PeaokLEVV7vU
+
+###
+POST http://localhost:5000/api/v1/issues/6aea15ab97f2c5eb46b86150/comments
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjZhZTk4ZjM5ZDllYmM3NTVjYWYyN2UwMCIsInJvbGUiOiJjaXRpemVuIiwiaWF0IjoxNzkzNjk0MzQ0LCJleHAiOjE3OTQyOTkxNDR9.yWOtI-n5VlDpncQXQ5FmPxHwzEIdnR5PeaokLEVV7vU
+
+{ "text": "This pothole has been here for months." }
+
+###
+GET http://localhost:5000/api/v1/issues/6aea15ab97f2c5eb46b86150/comments
