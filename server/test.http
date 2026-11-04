@@ -85,3 +85,7 @@ Content-Type: image/jpeg
 
 < C:\Users\sonali\Downloads\pexels-mart-production-7577895.jpg
 ------Boundary--
+
+###
+POST http://localhost:5000/api/v1/issues/6aea15ab97f2c5eb46b86150/upvote
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjZhZTk4ZjM5ZDllYmM3NTVjYWYyN2UwMCIsInJvbGUiOiJjaXRpemVuIiwiaWF0IjoxNzkzNjk0MzQ0LCJleHAiOjE3OTQyOTkxNDR9.yWOtI-n5VlDpncQXQ5FmPxHwzEIdnR5PeaokLEVV7vU

@@ -1,4 +1,5 @@
 const cloudinary = require("../config/cloudinary");
+const Upvote = require("../models/Upvote");
 
 const uploadToCloudinary = (buffer) => {
   return new Promise((resolve, reject) => {
@@ -163,4 +164,33 @@ const updateIssueStatus = async (req, res) => {
     res.status(500).json({ message: "Server error", error: error.message });
   }
 };
-module.exports = { createIssue ,getIssues , getIssueById ,getNearbyIssues , updateIssueStatus};
+const toggleUpvote = async (req, res) => {
+try {
+const issue = await Issue.findById(req.params.id);
+if (!issue) {
+return res.status(404).json({ message: "Issue not found" });
+}
+
+const existing = await Upvote.findOne({ user: req.user._id, issue: issue._id });
+
+if (existing) {
+await existing.deleteOne();
+issue.upvoteCount = Math.max(0, issue.upvoteCount - 1);
+await issue.save();
+return res.json({ message: "Upvote removed", upvoteCount: issue.upvoteCount, upvoted: false });
+}
+
+await Upvote.create({ user: req.user._id, issue: issue._id });
+issue.upvoteCount += 1;
+await issue.save();
+
+res.json({ message: "Issue upvoted", upvoteCount: issue.upvoteCount, upvoted: true });
+} catch (error) {
+if (error.name === "CastError") {
+return res.status(400).json({ message: "Invalid issue id" });
+}
+res.status(500).json({ message: "Server error", error: error.message });
+}
+};
+
+module.exports = { createIssue ,getIssues , getIssueById ,getNearbyIssues , updateIssueStatus ,toggleUpvote,};

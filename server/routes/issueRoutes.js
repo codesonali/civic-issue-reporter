@@ -1,5 +1,5 @@
 const express = require("express");
-const { createIssue , getIssues ,getIssueById , getNearbyIssues,updateIssueStatus,} = require("../controllers/issueController");
+const { createIssue , getIssues ,getIssueById , getNearbyIssues,updateIssueStatus,toggleUpvote,} = require("../controllers/issueController");
 const { protect ,authorize} = require("../middleware/authMiddleware");
 const upload = require("../middleware/upload");
 
@@ -11,5 +11,6 @@ router.get("/", getIssues);
 router.get("/nearby", getNearbyIssues);
 router.get("/:id", getIssueById);
 router.patch("/:id/status", protect, authorize("staff", "admin"), updateIssueStatus);
+router.post("/:id/upvote", protect, toggleUpvote);
 
 module.exports = router;
