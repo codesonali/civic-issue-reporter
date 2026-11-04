@@ -48,6 +48,14 @@ const issueSchema = new mongoose.Schema(
       type: Number,
       default: 0,
     },
+    statusHistory: [
+  {
+    status: String,
+    changedBy: { type: mongoose.Schema.Types.ObjectId, ref: "User" },
+    note: String,
+    changedAt: { type: Date, default: Date.now },
+  },
+],
   },
   { timestamps: true }
 );

@@ -46,3 +46,10 @@ GET http://localhost:5000/api/v1/issues/6aea15ab97f2c5eb46b86150
 
 ###
 GET http://localhost:5000/api/v1/issues/nearby?longitude=88.0636&latitude=22.0667&radius=2000
+
+###
+PATCH http://localhost:5000/api/v1/issues/6aea15ab97f2c5eb46b86150/status
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjZhZTk4ZjM5ZDllYmM3NTVjYWYyN2UwMCIsInJvbGUiOiJjaXRpemVuIiwiaWF0IjoxNzkzNjk0MzQ0LCJleHAiOjE3OTQyOTkxNDR9.yWOtI-n5VlDpncQXQ5FmPxHwzEIdnR5PeaokLEVV7vU
+
+{ "status": "resolved" }

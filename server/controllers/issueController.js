@@ -99,4 +99,47 @@ const getNearbyIssues = async (req, res) => {
     res.status(500).json({ message: "Server error", error: error.message });
   }
 };
-module.exports = { createIssue ,getIssues , getIssueById ,getNearbyIssues};
+const allowedTransitions = {
+  reported: ["acknowledged", "rejected"],
+  acknowledged: ["in_progress", "rejected"],
+  in_progress: ["resolved"],
+  resolved: [],
+  rejected: [],
+};
+
+const updateIssueStatus = async (req, res) => {
+  try {
+    const { status, note } = req.body;
+
+    if (!status) {
+      return res.status(400).json({ message: "Status is required" });
+    }
+
+    const issue = await Issue.findById(req.params.id);
+    if (!issue) {
+      return res.status(404).json({ message: "Issue not found" });
+    }
+
+    if (!allowedTransitions[issue.status].includes(status)) {
+      return res.status(400).json({
+        message: `Cannot change status from ${issue.status} to ${status}`,
+      });
+    }
+
+    if (status === "rejected" && !note) {
+      return res.status(400).json({ message: "A reason is required to reject an issue" });
+    }
+
+    issue.status = status;
+    issue.statusHistory.push({ status, changedBy: req.user._id, note });
+    await issue.save();
+
+    res.json({ message: "Status updated", issue });
+  } catch (error) {
+    if (error.name === "CastError") {
+      return res.status(400).json({ message: "Invalid issue id" });
+    }
+    res.status(500).json({ message: "Server error", error: error.message });
+  }
+};
+module.exports = { createIssue ,getIssues , getIssueById ,getNearbyIssues , updateIssueStatus};
