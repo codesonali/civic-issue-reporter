@@ -73,5 +73,30 @@ const getIssueById = async (req, res) => {
     res.status(500).json({ message: "Server error", error: error.message });
   }
 };
+const getNearbyIssues = async (req, res) => {
+  try {
+    const longitude = Number(req.query.longitude);
+    const latitude = Number(req.query.latitude);
+    const radius = Number(req.query.radius) || 2000;
 
-module.exports = { createIssue ,getIssues , getIssueById};
+    if (Number.isNaN(longitude) || Number.isNaN(latitude)) {
+      return res.status(400).json({ message: "Valid longitude and latitude are required" });
+    }
+
+    const issues = await Issue.find({
+      location: {
+        $near: {
+          $geometry: { type: "Point", coordinates: [longitude, latitude] },
+          $maxDistance: radius,
+        },
+      },
+    })
+      .populate("reporter", "name")
+      .limit(50);
+
+    res.json({ count: issues.length, issues });
+  } catch (error) {
+    res.status(500).json({ message: "Server error", error: error.message });
+  }
+};
+module.exports = { createIssue ,getIssues , getIssueById ,getNearbyIssues};

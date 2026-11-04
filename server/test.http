@@ -42,4 +42,7 @@ GET http://localhost:5000/api/v1/issues
 GET http://localhost:5000/api/v1/issues?category=pothole&page=1&limit=5
 
 ###
-GET http://localhost:5000/api/v1/issues/PASTE_AN_ISSUE_ID_FROM_THE_FIRST_RESPONSE
+GET http://localhost:5000/api/v1/issues/6aea15ab97f2c5eb46b86150
+
+###
+GET http://localhost:5000/api/v1/issues/nearby?longitude=88.0636&latitude=22.0667&radius=2000
